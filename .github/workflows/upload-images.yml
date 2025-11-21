@@ -60,7 +60,7 @@ jobs:
           MAX_RETRIES: '3'
           RETRY_DELAY: '2'
         run: |
-          python importimmaginicloud.py
+          python upload_images_to_gcs.py
       
       - name: Upload logs
         if: always()
