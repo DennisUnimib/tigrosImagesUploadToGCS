@@ -16,7 +16,7 @@ on:
   
   # Esecuzione schedulata (ogni giorno alle 2:00 AM UTC)
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '0 20 * * *'
   
   # Esecuzione su push al branch main (opzionale)
   # push:
