@@ -79,11 +79,13 @@ class ImageUploader:
             self.storage_client = storage.Client.from_service_account_json(credentials_path)
             self.bucket = self.storage_client.bucket(BUCKET_NAME)
             
-            # Test bucket access
-            if not self.bucket.exists():
-                raise ValueError(f"Bucket {BUCKET_NAME} non esiste")
+            # ❌ RIMUOVI QUESTO CONTROLLO (richiede storage.buckets.get)
+            # if not self.bucket.exists():
+            #     raise ValueError(f"Bucket {BUCKET_NAME} non esiste o non accessibile")
             
-            logger.info(f"✅ Connesso a GCS - Bucket: {BUCKET_NAME}")
+            # ✅ RIMPIAZZA CON:
+            logger.info(f"✅ Client GCS configurato - Bucket: {BUCKET_NAME}")
+            logger.warning("⚠️ Bucket existence check skipped (requires storage.buckets.get permission)")
             
         except Exception as e:
             logger.error(f"Errore durante setup dei client: {e}")
