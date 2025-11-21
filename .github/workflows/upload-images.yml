@@ -46,7 +46,6 @@ jobs:
           pip install -r requirements.txt
       
       - name: Run image upload script
-        working-directory: tigrosImagesUploadToGCS
         env:
           # Tutti i parametri da GitHub Secrets
           MONGO_URI: ${{ secrets.MONGO_URI }}
@@ -68,7 +67,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: upload-logs-${{ github.run_number }}
-          path: tigrosImagesUploadToGCS/upload_*.log
+          path: upload_*.log
           retention-days: 30
       
       - name: Notify on failure
