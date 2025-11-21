@@ -1,4 +1,4 @@
-name: Upload Tigros Products Images to GCS
+name: Upload Tigros Images to GCS
 
 on:
   # Esecuzione manuale dal tab Actions
@@ -28,7 +28,7 @@ on:
 jobs:
   upload-images:
     runs-on: ubuntu-latest
-    timeout-minutes: 120  # Timeout di 2 ore
+    timeout-minutes: 360  # Timeout di 6 ore
     
     steps:
       - name: Checkout repository
@@ -60,7 +60,7 @@ jobs:
           MAX_RETRIES: '3'
           RETRY_DELAY: '2'
         run: |
-          python upload_images_to_gcs.py
+          python importimmaginicloud.py
       
       - name: Upload logs
         if: always()
