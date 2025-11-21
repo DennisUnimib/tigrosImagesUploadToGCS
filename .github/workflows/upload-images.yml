@@ -1,5 +1,4 @@
 name: Upload Tigros Images to GCS
-
 on:
   # Esecuzione manuale dal tab Actions
   workflow_dispatch:
@@ -9,6 +8,21 @@ on:
         required: false
         default: '10'
         type: string
+      batch_size:
+        description: 'MongoDB batch size'
+        required: false
+        default: '100'
+        type: string
+      upload_batch_size:
+        description: 'Upload batch size'
+        required: false
+        default: '50'
+        type: string
+      delay_between_batches:
+        description: 'Delay between batches (seconds)'
+        required: false
+        default: '1.0'
+        type: string
       collection_name:
         description: 'Collection name (override)'
         required: false
@@ -16,19 +30,12 @@ on:
   
   # Esecuzione schedulata (ogni giorno alle 2:00 AM UTC)
   schedule:
-    - cron: '0 20 * * *'
-  
-  # Esecuzione su push al branch main (opzionale)
-  # push:
-  #   branches:
-  #     - main
-  #   paths:
-  #     - 'tigrosImagesUploadToGCS/**'
+    - cron: '0 2 * * *'
 
 jobs:
   upload-images:
     runs-on: ubuntu-latest
-    timeout-minutes: 360  # Timeout di 6 ore
+    timeout-minutes: 120
     
     steps:
       - name: Checkout repository
@@ -45,7 +52,7 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
       
-      - name: Run image upload script
+      - name: Run image upload script (BULK MODE)
         env:
           # Tutti i parametri da GitHub Secrets
           MONGO_URI: ${{ secrets.MONGO_URI }}
@@ -59,6 +66,11 @@ jobs:
           REQUEST_TIMEOUT: '30'
           MAX_RETRIES: '3'
           RETRY_DELAY: '2'
+          
+          # Bulk settings
+          BATCH_SIZE: ${{ inputs.batch_size || '100' }}
+          UPLOAD_BATCH_SIZE: ${{ inputs.upload_batch_size || '50' }}
+          DELAY_BETWEEN_BATCHES: ${{ inputs.delay_between_batches || '1.0' }}
         run: |
           python upload_images_to_gcs.py
       
