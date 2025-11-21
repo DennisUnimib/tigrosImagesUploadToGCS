@@ -21,13 +21,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Configurazione da variabili d'ambiente
-MONGO_URI = os.getenv("MONGO_URI")
-DB_NAME = os.getenv("DB_NAME", "tigros")
-COLLECTION_NAME = os.getenv("COLLECTION_NAME", "images-test")
-BUCKET_NAME = os.getenv("BUCKET_NAME", "images_product_tigros")
-GCS_CREDENTIALS_JSON = os.getenv("GCS_CREDENTIALS_JSON")
-
 # Configurazione rate limiting e performance
 MAX_CONCURRENT_DOWNLOADS = int(os.getenv("MAX_CONCURRENT_DOWNLOADS", "10"))
 REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", "30"))
