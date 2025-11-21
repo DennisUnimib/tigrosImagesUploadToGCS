@@ -21,6 +21,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Configurazione da variabili d'ambiente
+MONGO_URI = os.getenv("MONGO_URI")
+DB_NAME = os.getenv("DB_NAME")
+COLLECTION_NAME = os.getenv("COLLECTION_NAME")
+BUCKET_NAME = os.getenv("BUCKET_NAME")
+GCS_CREDENTIALS_JSON = os.getenv("GCS_CREDENTIALS_JSON")
+
 # Configurazione rate limiting e performance
 MAX_CONCURRENT_DOWNLOADS = int(os.getenv("MAX_CONCURRENT_DOWNLOADS", "10"))
 REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", "30"))
@@ -42,6 +49,8 @@ class ImageUploader:
         """Valida che tutte le configurazioni necessarie siano presenti"""
         required_vars = {
             'MONGO_URI': MONGO_URI,
+            'DB_NAME': DB_NAME,
+            'COLLECTION_NAME': COLLECTION_NAME,
             'BUCKET_NAME': BUCKET_NAME,
             'GCS_CREDENTIALS_JSON': GCS_CREDENTIALS_JSON
         }
