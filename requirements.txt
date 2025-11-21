@@ -1,0 +1,11 @@
+# MongoDB client
+pymongo==4.6.1
+
+# Async HTTP client
+aiohttp==3.9.1
+
+# Google Cloud Storage
+google-cloud-storage==2.14.0
+
+# Type hints support (Python < 3.9)
+typing-extensions==4.9.0
